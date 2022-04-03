@@ -2,4 +2,4 @@
 /.git
 /src/server/asgi.py
 /src/server/wsgi.py
-
+/.idea
