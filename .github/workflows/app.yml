@@ -36,4 +36,4 @@ jobs:
     - name: Check templates
       run: |
         # check  templates
-        python ../src/manage.py validate_templates
+        python manage.py validate_templates
