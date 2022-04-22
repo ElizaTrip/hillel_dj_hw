@@ -21,5 +21,3 @@ def email_verification(request):
 
 def welcome_email(request):
     return render(request, 'welcome.email')
-
-
