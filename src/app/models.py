@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 
 
 class Person(models.Model):
@@ -74,3 +75,9 @@ class Lesson(models.Model):
     """
 
     lesson_desc = models.CharField(max_length=124)
+
+
+class EmailForms(forms.Form):
+    """Форма для получения почты. """
+
+    email = forms.EmailField(max_length=80)
