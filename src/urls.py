@@ -16,11 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from app.views import home, reset_password, email_verification, welcome_email
+from app.views import home, reset_password, email_verification, welcome_email, email_send
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', home),
+    path('email_send', email_send),
     path('reset_password', reset_password),
     path('email_verification', email_verification),
     path('welcome_email', welcome_email),
