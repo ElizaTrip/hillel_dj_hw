@@ -1,17 +1,10 @@
 {% extends "base.html" %}
 
 {% block title %}
-  Verify your email.
+  Verify.
 {% endblock %}
 
 {% block content %}
-    <p> Для верификации аккаунта вам придёт письмо на почту. </p>
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form }}
-
-        <input type="submit" value="Submit">
-    </form>
-
+    <p> Верификация аккаунта прошла успешно. </p>
 
 {% endblock %}

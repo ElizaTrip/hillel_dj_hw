@@ -4,3 +4,4 @@
 /src/server/wsgi.py
 /.idea
 .env
+__pycache__/
