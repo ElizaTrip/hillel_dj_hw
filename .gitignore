@@ -4,4 +4,6 @@
 /src/server/wsgi.py
 /.idea
 .env
-__pycache__/
+/src/__pycache__y
+/src/app/__pycache__
+/src/db.sqlite3
