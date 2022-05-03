@@ -16,13 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from app.views import home, reset_password, email_verification, welcome_email, email_send
+from app.views import home, email_send
+from app.views import SubjectSelect, SubjectCreate, SubjectUpdate
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', home),
     path('email_send', email_send),
-    path('reset_password', reset_password),
-    path('email_verification', email_verification),
-    path('welcome_email', welcome_email),
+    path('subjects', SubjectSelect.as_view(), name="subjects_list"),
+    path('sub_create', SubjectCreate.as_view(), name='subjects_create'),
+    path('sub_update/<int:pk>', SubjectUpdate.as_view(), name='subjects_update'),
+
+
 ]
