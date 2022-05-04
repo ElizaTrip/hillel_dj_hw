@@ -5,9 +5,9 @@ name: Python application
 
 on:
   push:
-    branches: [ master, develop, models, templates ]
+    branches: [ master, email ]
   pull_request:
-    branches: [ master, develop, models, templates ]
+    branches: [ master, email ]
 
 permissions:
   contents: read
@@ -29,6 +29,7 @@ jobs:
         pip install django
         pip install django-extensions
         pip install flake8 pytest
+        pip install python-dotenv
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
       run: |
