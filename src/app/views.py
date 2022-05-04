@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DetailView
+from django.views.generic import ListView, UpdateView, DetailView
 
 from .email import send
 from .models import Subject, Person
@@ -11,11 +11,15 @@ def home(request):
 
 
 class SubjectSelect(ListView):
+    """ Creates page for viewing info about subjects. """
+
     model = Subject
     template_name = "subject_list.html"
 
 
 class SubjectUpdate(UpdateView):
+    """ Creates page for updating info about subject. """
+
     model = Subject
     fields = ["sub_name", "sub_desc", "hours_in_week"]
     template_name = "sub_update.html"
@@ -23,11 +27,15 @@ class SubjectUpdate(UpdateView):
 
 
 class TeacherSelect(ListView):
+    """ Creates page for viewing info about teachers. """
+
     model = Person
     template_name = "teacher_list.html"
 
 
 class TeacherUpdate(UpdateView):
+    """ Creates page for updating info about teacher. """
+
     model = Person
     fields = ["first_name", "last_name", "age", "person_type",
               "update_time", "is_active"]
@@ -36,11 +44,15 @@ class TeacherUpdate(UpdateView):
 
 
 class StudentSelect(ListView):
+    """ Creates page for viewing list of students. """
+
     model = Person
     template_name = "student_list.html"
 
 
 class StudentDetail(DetailView):
+    """ Creates page for viewing details about student. """
+
     model = Person
     template_name = 'student_detail.html'
 
