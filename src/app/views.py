@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DetailView
 
 from .email import send
 from .models import Subject, Person
@@ -23,16 +23,26 @@ class SubjectUpdate(UpdateView):
 
 
 class TeacherSelect(ListView):
-    model = Subject
+    model = Person
     template_name = "teacher_list.html"
 
 
-class PersonCreate(CreateView):
+class TeacherUpdate(UpdateView):
     model = Person
-    fields = ["first_name", "last_name", "age", "person_type", "create_time",
+    fields = ["first_name", "last_name", "age", "person_type",
               "update_time", "is_active"]
-    template_name = "student_create.html"
-    success_url = reverse_lazy("subjects_list")
+    template_name = "teacher_update.html"
+    success_url = reverse_lazy("teachers_list")
+
+
+class StudentSelect(ListView):
+    model = Person
+    template_name = "student_list.html"
+
+
+class StudentDetail(DetailView):
+    model = Person
+    template_name = 'student_detail.html'
 
 
 def email_send(request):
