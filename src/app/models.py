@@ -46,10 +46,7 @@ class Course(models.Model):
 
 class Lesson(models.Model):
     """
-     Модель урока.
-
-     Поля:
-      1. Описание урока.
+     Model for lessons.
     """
 
     description = models.CharField(max_length=124)
