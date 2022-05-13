@@ -13,7 +13,7 @@ class PersonAdmin(admin.ModelAdmin):
     def full_name(self, instance):
         """
             Making custom column. Displaying a link if person has
-            a social_url. 
+            a social_url.
         """
         if instance.social_url:
             return format_html("<a href='{}'>{} {}<a/>",
