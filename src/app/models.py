@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import CASCADE
 
 
 class Person(models.Model):
@@ -15,6 +16,8 @@ class Person(models.Model):
     is_active = models.BooleanField()
     social_url = models.CharField(max_length=80, default='')
 
+    group = models.ForeignKey("Group", on_delete=CASCADE, null=True)
+
 
 class Group(models.Model):
     """
@@ -23,6 +26,8 @@ class Group(models.Model):
 
     number = models.IntegerField()
     students_amount = models.IntegerField()
+
+    course = models.OneToOneField("Course", on_delete=CASCADE, null=True)
 
 
 class Subject(models.Model):
@@ -33,6 +38,8 @@ class Subject(models.Model):
     name = models.CharField(max_length=90)
     description = models.CharField(max_length=124)
     hours_in_week = models.IntegerField()
+
+    teacher = models.OneToOneField("Person", on_delete=CASCADE, null=True)
 
 
 class Course(models.Model):
@@ -50,3 +57,5 @@ class Lesson(models.Model):
     """
 
     description = models.CharField(max_length=124)
+
+    subject = models.ForeignKey("Subject", on_delete=CASCADE, null=True)
