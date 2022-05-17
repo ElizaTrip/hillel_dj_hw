@@ -27,7 +27,7 @@ class Group(models.Model):
     number = models.IntegerField()
     students_amount = models.IntegerField()
 
-    course = models.OneToOneField("Course", on_delete=CASCADE, null=True)
+    course = models.ForeignKey("Course", on_delete=CASCADE, null=True)
 
 
 class Subject(models.Model):
