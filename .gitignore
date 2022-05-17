@@ -4,3 +4,8 @@
 /src/server/wsgi.py
 /.idea
 .env
+src/__pycache__/
+src/app/__pycache__/urls.cpython-37.pyc
+src/db.sqlite3
+src/app/__pycache__/models.cpython-37.pyc
+src/__pycache__/urls.cpython-37.pyc
