@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from app.views import home, email_send
+from app.views import home, email_send, sign_in, logging_out
 from app.views import SubjectSelect, SubjectUpdate
 from app.views import TeacherSelect, TeacherUpdate
 from app.views import StudentSelect, StudentDetail
@@ -34,4 +34,7 @@ urlpatterns = [
 
     path('students', StudentSelect.as_view(), name="student_list"),
     path('student_detail/<int:pk>', StudentDetail.as_view(), name="student_detail"),
+
+    path('login', sign_in, name='login'),
+    path('logout', logging_out, name='logout')
 ]
