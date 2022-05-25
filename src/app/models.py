@@ -1,18 +1,10 @@
 from django.db import models
+from django.db.models import CASCADE
 
 
 class Person(models.Model):
     """
-     Модель Person.
-
-     Поля:
-      1. Имя.
-      2. Фамилия.
-      3. Возраст.
-      4. Тип (учитель/студент).
-      5. Дата создания.
-      6. Дата посл. обовления.
-      7. Активен ли аккаунт.
+     Model for students and teachers.
     """
 
     first_name = models.CharField(max_length=50)
@@ -22,55 +14,48 @@ class Person(models.Model):
     create_time = models.DateField()
     update_time = models.DateField()
     is_active = models.BooleanField()
+    social_url = models.CharField(max_length=80, default='')
+
+    group = models.ForeignKey("Group", on_delete=CASCADE, null=True)
 
 
 class Group(models.Model):
     """
-     Модель группы.
-
-     Поля:
-      1. Номер.
-      2. Кол-во учащихся.
+     Model for info about groups
     """
 
-    group_num = models.IntegerField()
-    stud_in_group = models.IntegerField()
+    number = models.IntegerField()
+    students_amount = models.IntegerField()
+
+    course = models.ForeignKey("Course", on_delete=CASCADE, null=True)
 
 
 class Subject(models.Model):
     """
-     Модель предмета.
-
-     Поля:
-      1. Название.
-      2. Описание.
-      3. Количество часов в неделю.
+     Model for subjects.
     """
 
-    sub_name = models.CharField(max_length=90)
-    sub_desc = models.CharField(max_length=124)
+    name = models.CharField(max_length=90)
+    description = models.CharField(max_length=124)
     hours_in_week = models.IntegerField()
+
+    teacher = models.OneToOneField("Person", on_delete=CASCADE, null=True)
 
 
 class Course(models.Model):
     """
-     Модель курса.
-
-     Поля:
-      1. Наименование.
-      2. Сложность.
+     Model for course.
     """
 
-    course_name = models.CharField(max_length=90)
+    name = models.CharField(max_length=90)
     difficulty = models.IntegerField()
 
 
 class Lesson(models.Model):
     """
-     Модель урока.
-
-     Поля:
-      1. Описание урока.
+     Model for lessons.
     """
 
-    lesson_desc = models.CharField(max_length=124)
+    description = models.CharField(max_length=124)
+
+    subject = models.ForeignKey("Subject", on_delete=CASCADE, null=True)

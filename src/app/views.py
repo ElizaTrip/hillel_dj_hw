@@ -21,7 +21,7 @@ class SubjectUpdate(UpdateView):
     """ Creates page for updating info about subject. """
 
     model = Subject
-    fields = ["sub_name", "sub_desc", "hours_in_week"]
+    fields = ["name", "description", "hours_in_week"]
     template_name = "sub_update.html"
     success_url = reverse_lazy("subjects_list")
 

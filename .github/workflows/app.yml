@@ -5,7 +5,7 @@ name: Python application
 
 on:
   push:
-    branches: [ master, classview ]
+    branches: [ master, relations ]
   pull_request:
     branches: [ master ]
 
