@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, logout, login
+from django.contrib.auth import authenticate, logout, login, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -8,6 +8,9 @@ from django.views.generic import ListView, UpdateView, DetailView
 
 from .email import send
 from .models import Subject, Person
+
+
+USER_MODEL = get_user_model()
 
 
 def home(request):
@@ -96,3 +99,39 @@ def sign_in(request):
 def logging_out(request):
     logout(request)
     return redirect(reverse("login"))
+
+
+def sign_up(request):
+    if request.method == 'GET':
+        return render(request, 'signup.html')
+    elif request.method == 'POST':
+        email = request.POST.get('email')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = USER_MODEL.objects.create_user(
+            username=username,
+            email=email,
+            password=password,
+            is_active=False,
+        )
+
+        send(
+            subject="Verify your account!",
+            to_email=email,
+            template_name="email_verification",
+            context={
+                "username": username,
+                "verify_url": reverse("verify_account", kwargs={"username": username}),
+                "request": request
+            }
+        )
+
+        return HttpResponse(f'Hello, {user.username}')
+
+
+def verify_account(request, username):
+    user = USER_MODEL.objects.get(username=username)
+    user.is_active = True
+    user.save()
+    return HttpResponse(f"Hello, {user.username}! Your account is verified!")
