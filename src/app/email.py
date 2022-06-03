@@ -20,4 +20,3 @@ def send(subject, to_email,  template_name, context=None):
         recipient_list=[to_email],
         html_message=html_message,
     )
-
