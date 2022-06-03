@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from app.views import home, email_send, sign_in, logging_out, sign_up, verify_account
+from app.views import home, email_send, sign_in, logging_out, register, activate
 from app.views import SubjectSelect, SubjectUpdate
 from app.views import TeacherSelect, TeacherUpdate
 from app.views import StudentSelect, StudentDetail
@@ -38,6 +38,6 @@ urlpatterns = [
     path('login', sign_in, name='login'),
     path('logout', logging_out, name='logout'),
 
-    path('signup', sign_up, name='signup'),
-    path('verify_account/<str:username>', verify_account, name='verify_account'),
+    path('signup', register, name='signup'),
+    path('verify_account/<str:uid>/<str:token>', activate, name='verify_account'),
 ]

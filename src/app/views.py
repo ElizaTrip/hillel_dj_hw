@@ -1,9 +1,12 @@
 from django.contrib.auth import authenticate, logout, login, get_user_model
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.tokens import default_token_generator
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.generic import ListView, UpdateView, DetailView
 
 from .email import send
@@ -101,7 +104,7 @@ def logging_out(request):
     return redirect(reverse("login"))
 
 
-def sign_up(request):
+def register(request):
     if request.method == 'GET':
         return render(request, 'signup.html')
     elif request.method == 'POST':
@@ -122,16 +125,27 @@ def sign_up(request):
             template_name="email_verification",
             context={
                 "username": username,
-                "verify_url": reverse("verify_account", kwargs={"username": username}),
-                "request": request
+                "verify_url": reverse("verify_account", kwargs={
+                    "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                    "token": default_token_generator.make_token(user)
+                }),
+                "request": request,
             }
         )
+        return HttpResponse(f'Hello, {user.username}. Check your email for verification letter. ')
 
-        return HttpResponse(f'Hello, {user.username}')
 
+def activate(request, uid, token):
+    try:
+        user = USER_MODEL.objects.get(pk=urlsafe_base64_decode(uid))
+    except (TypeError, ValueError, OverflowError, USER_MODEL.DoesNotExist):
+        user = None
 
-def verify_account(request, username):
-    user = USER_MODEL.objects.get(username=username)
-    user.is_active = True
-    user.save()
-    return HttpResponse(f"Hello, {user.username}! Your account is verified!")
+    if user is not None and default_token_generator.check_token(user, token):
+        user.is_active = True
+        user.save()
+
+        login(request, user)
+        return redirect(reverse('student_list'))
+
+    return HttpResponse("Invalid link.")
