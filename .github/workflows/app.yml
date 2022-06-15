@@ -5,7 +5,7 @@ name: Python application
 
 on:
   push:
-    branches: [ master, swagger ]
+    branches: [ master, rest ]
   pull_request:
     branches: [ master ]
 
@@ -31,8 +31,6 @@ jobs:
         pip install flake8 pytest
         pip install python-dotenv
         pip install djangorestframework
-        pip install -U drf-yasg
-        python -m pip install django-cors-headers 
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
       run: |
