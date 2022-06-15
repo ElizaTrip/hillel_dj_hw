@@ -32,6 +32,7 @@ jobs:
         pip install python-dotenv
         pip install djangorestframework
         pip install -U drf-yasg
+        python -m pip install django-cors-headers 
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
       run: |
