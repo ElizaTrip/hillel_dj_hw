@@ -1,17 +1,18 @@
-from django.contrib.auth import authenticate, logout, login, get_user_model
+from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy, reverse
+from django.shortcuts import redirect, render
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.views.generic import ListView, UpdateView, DetailView
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.views.generic import DetailView, ListView, UpdateView
+from rest_framework import permissions, viewsets
 
 from .email import send
-from .models import Subject, Person
-
+from .models import Person, Subject, Group
+from .serializers import PersonSerializer, GroupSerializer, SubjectSerializer
 
 USER_MODEL = get_user_model()
 
@@ -149,3 +150,21 @@ def activate(request, uid, token):
         return redirect(reverse('student_list'))
 
     return HttpResponse("Invalid link.")
+
+
+class PersonViewSet(viewsets.ModelViewSet):
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class GroupViewSet(viewsets.ModelViewSet):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class SubjectViewSet(viewsets.ModelViewSet):
+    queryset = Subject.objects.all()
+    serializer_class = SubjectSerializer
+    permission_classes = [permissions.IsAuthenticated]
