@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 load_dotenv(dotenv_path=BASE_DIR / '../.env')
 
-SECRET_KEY = 'django-insecure-=srfh1oo-o@75*n1d)0b(3_q4!qd(x%i8%gp70gxi3-rgfda(#'
+SECRET_KEY = os.getenv('SECRET_KEY', 'some-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -49,6 +49,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'corsheaders',
+    'django_filters',
+
+    # 'Crispy_forms' is used to fix error from validate_templates:
+    # TemplateSyntaxError 'crispy_forms_tags' is not a registered tag library.
+    'crispy_forms',
 
     'app',
 ]
@@ -68,6 +73,12 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8000",
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 20
+}
 
 ROOT_URLCONF = 'urls'
 
