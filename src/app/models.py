@@ -3,7 +3,6 @@ from django.db.models import CASCADE
 from django.utils import timezone
 
 
-
 class Person(models.Model):
     """
      Model for students and teachers.
