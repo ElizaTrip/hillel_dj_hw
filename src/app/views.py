@@ -156,7 +156,7 @@ def activate(request, uid, token):
 
 class PersonViewSet(viewsets.ModelViewSet):
     """
-        API endpoint that allows person to be viewed or edited.
+        Person ViewSet which allow list, create, retrieve, update and delete methods.
     """
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
@@ -168,7 +168,7 @@ class PersonViewSet(viewsets.ModelViewSet):
 
 class GroupViewSet(viewsets.ModelViewSet):
     """
-         API endpoint that allows Group to be viewed or edited.
+        GroupViewSet which allow list, create, retrieve, update and delete methods.
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
@@ -180,7 +180,7 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 class SubjectViewSet(viewsets.ModelViewSet):
     """
-     API endpoint that allows Subjects to be viewed or edited.
+     SubjectViewSet which allow list, create, retrieve, update and delete methods.
     """
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
