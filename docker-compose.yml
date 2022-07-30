@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+
+  postgres:
+    image: postgres
+    ports:
+      - "127.0.0.1:5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "example"
+
+  app:
+    build: .
+    env_file: .env
+    entrypoint: /code/entrypoint.sh
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./:/code
+    depends_on:
+      - postgres
